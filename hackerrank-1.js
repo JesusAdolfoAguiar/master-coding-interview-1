@@ -705,3 +705,50 @@
 // myLinkedList.insert(2, 1);
 // myLinkedList.remove(1);
 // myLinkedList.reverse();
+
+/// Create Stack ///
+
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+class Stack {
+  constructor() {
+    this.top = null;
+    this.bottom = null;
+    this.length = 0;
+  }
+  peek(){
+    // see the top node
+    return this.top;
+  }
+  push(value){
+    // add a node on top of the stack
+    const newNode = new Node(value);
+    if (this.length === 0) {
+      this.pop = newNode;
+      this.bottom = newNode;
+    } else {
+      const holdingPointer = this.top;
+      this.top = newNode;
+      this.top.next = holdingPointer;
+    }
+    this.length++;
+    return this;
+  }
+  pop(){
+    // remove from the top of the stack
+    if (!this.top) {
+      return null;
+    }
+    const holdingPointer = this.top;
+    this.top = this.top.next;
+    this.length--;
+    return this
+  }
+}
+
+const myStack = new Stack();
