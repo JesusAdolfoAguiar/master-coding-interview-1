@@ -708,47 +708,155 @@
 
 /// Create Stack ///
 
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.next = null;
-  }
-}
+// Using Linked List //
 
-class Stack {
-  constructor() {
-    this.top = null;
-    this.bottom = null;
-    this.length = 0;
-  }
-  peek(){
-    // see the top node
-    return this.top;
-  }
-  push(value){
-    // add a node on top of the stack
-    const newNode = new Node(value);
-    if (this.length === 0) {
-      this.pop = newNode;
-      this.bottom = newNode;
-    } else {
-      const holdingPointer = this.top;
-      this.top = newNode;
-      this.top.next = holdingPointer;
-    }
-    this.length++;
-    return this;
-  }
-  pop(){
-    // remove from the top of the stack
-    if (!this.top) {
-      return null;
-    }
-    const holdingPointer = this.top;
-    this.top = this.top.next;
-    this.length--;
-    return this
-  }
-}
+// class Node {
+//   constructor(value) {
+//     this.value = value;
+//     this.next = null;
+//   }
+// }
 
-const myStack = new Stack();
+// class Stack {
+//   constructor() {
+//     this.top = null;
+//     this.bottom = null;
+//     this.length = 0;
+//   }
+//   peek(){
+//     // see the top node
+//     return this.top;
+//   }
+//   push(value){
+//     // add a node on top of the stack
+//     const newNode = new Node(value);
+//     if (this.length === 0) {
+//       this.pop = newNode;
+//       this.bottom = newNode;
+//     } else {
+//       const holdingPointer = this.top;
+//       this.top = newNode;
+//       this.top.next = holdingPointer;
+//     }
+//     this.length++;
+//     return this;
+//   }
+//   pop(){
+//     // remove from the top of the stack
+//     if (!this.top) {
+//       return null;
+//     }
+//     const holdingPointer = this.top;
+//     this.top = this.top.next;
+//     this.length--;
+//     return this
+//   }
+// }
+
+// const myStack = new Stack();
+
+// Using Array //
+
+// class Stack {
+//   constructor() {
+//     this.stack = [];
+//   }
+//   peek() {
+//     // see the top element
+//     return this.stack[this.stack.length - 1];
+//   }
+//   push(value) {
+//     // add an element on top of the stack
+//     this.stack.push(value);
+//     return this;
+//   }
+//   pop() {
+//     // remove from the top of the stack
+//     this.stack.pop();
+//     return this;
+//   }
+// }
+
+/// Create Queue ///
+
+// Using Linked List //
+
+// class Node {
+//   constructor(value) {
+//     this.value = value;
+//     this.next = null;
+//   }
+// }
+
+// class Queue {
+//   constructor() {
+//     this.first = null;
+//     this.last = null;
+//     this.length = 0;
+//   }
+//   peek() {
+//     return this.first
+//   }
+//   enqueue(value){
+//     const newNode = new Node(value);
+//     if (this.length === 0) {
+//       this.first = newNode;
+//       this.last =  newNode;
+//     } else {
+//       this.last.next = newNode;
+//       this.last = newNode;
+//     }
+//     this.length++;
+//     return this;
+//   }
+//   dequeue(){
+//     if(!this.first) {
+//       return null
+//     }
+//     if (this.first === this.last) {
+//       this.last = null;
+//     }
+//     this.first = this.first.next;
+//     this.length--;
+//     return this;
+//   }
+// }
+
+/// Implement Queue using Stacks ///
+
+// class Queue {
+//   constructor() {
+//     this.stack1 = [];
+//     this.stack2 = [];
+//   }
+
+//   // Adds an element to the end of the queue
+//   enqueue(value) {
+//     this.stack1.push(value);
+//   }
+
+//   // Removes an element from the front of the queue
+//   dequeue() {
+//     // If both stacks are empty
+//     if (this.stack1.length === 0 && this.stack2.length === 0) {
+//       return 'Queue is empty';
+//     }
+//     // If stack2 is empty and stack1 has elements
+//     if (this.stack2.length === 0) {
+//       while (this.stack1.length > 0) {
+//         var p = this.stack1.pop();
+//         this.stack2.push(p);
+//       }
+//     }
+//     return this.stack2.pop();
+//   }
+
+//   // Returns the element at the front of the queue
+//   peek() {
+//     if (this.stack2.length === 0) {
+//       return this.stack1[0];
+//     } else {
+//       return this.stack2[this.stack2.length - 1];
+//     }
+//   }
+// }
