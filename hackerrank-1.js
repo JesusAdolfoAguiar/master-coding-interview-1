@@ -861,155 +861,386 @@
 //   }
 // }
 
-class Node {
-  constructor(value){
-    this.left = null;
-    this.right = null;
-    this.value = value;
-  }
-}
 
-class BinarySearchTree {
-  constructor() {
-    this.root = null;
-  }
-  insert(value){
-    const newNode = new Node(value);
-    if (this.root === null) {
-      this.root = newNode;
-    } else {
-      let currentNode = this.root;
-      while(true) {
-        if(value < currentNode. value) {
-          if(!currentNode.left) {
-            currentNode.left = newNode;
-            return this;
-          }
-          currentNode = currentNode.left;
-        } else {
-          if(!currentNode.right) {
-            currentNode.right = newNode;
-            return this;
-          }
-          currentNode = currentNode.right;
-        }
-      }
-    }
-  }
-  lookup(value){
-    if (!this.root) {
-      return false;
-    }
-    let currentNode = this.root;
-    while(currentNode){
-      if(value < currentNode.value) {
-        currentNode = currentNode.left;
-      } else if(value > currentNode.value) {
-        currentNode = currentNode.right;
-      } else if(currentNode.value === value) {
-        return currentNode
-      }
-    }
-    return false; 
-  }
-  remove(value){
-    if (!this.root) {
-      return false;
-    }
-    let currentNode = this.root;
-    let parentNode = null;
-    while(currentNode) {
-      if(value < currentNode.value) {
-        parentNode = currentNode;
-        currentNode = currentNode.left;
-      } else if(value > currentNode.value) {
-        parentNode = currentNode;
-        currentNode = currentNode.right;
-      } else if(currentNode.value === value) {
+///  Create Binary Search Tree ///
 
-        // 1. No right child
-        if (currentNode.right === null) {
-          this.root = currentNode.left;
-        } else {
-          // if parent > current value, make current left child
-          // a child of parent
-          if(currentNode.value < parentNode.value) {
-            parentNode.left = currentNode.left;
+// class Node {
+//   constructor(value){
+//     this.left = null;
+//     this.right = null;
+//     this.value = value;
+//   }
+// }
 
-          //if parent < current value, make left child
-          // a right child of parent
-          } else if(currentNode.value > parentNode.value) {
-            parentNode.right = currentNode.left;
-          }
-        }
-        // 2. Right child which doesn't have a left child
-      } else if (currentNode.right.left === null) {
-        if(parentNode === null) {
-          this.root = currentNode.left;
-        } else {
-          currentNode.right.left = currentNode.left;
+// class BinarySearchTree {
+//   constructor() {
+//     this.root = null;
+//   }
+//   insert(value){
+//     const newNode = new Node(value);
+//     if (this.root === null) {
+//       this.root = newNode;
+//     } else {
+//       let currentNode = this.root;
+//       while(true) {
+//         if(value < currentNode. value) {
+//           if(!currentNode.left) {
+//             currentNode.left = newNode;
+//             return this;
+//           }
+//           currentNode = currentNode.left;
+//         } else {
+//           if(!currentNode.right) {
+//             currentNode.right = newNode;
+//             return this;
+//           }
+//           currentNode = currentNode.right;
+//         }
+//       }
+//     }
+//   }
+//   lookup(value){
+//     if (!this.root) {
+//       return false;
+//     }
+//     let currentNode = this.root;
+//     while(currentNode){
+//       if(value < currentNode.value) {
+//         currentNode = currentNode.left;
+//       } else if(value > currentNode.value) {
+//         currentNode = currentNode.right;
+//       } else if(currentNode.value === value) {
+//         return currentNode
+//       }
+//     }
+//     return false; 
+//   }
+//   remove(value){
+//     if (!this.root) {
+//       return false;
+//     }
+//     let currentNode = this.root;
+//     let parentNode = null;
+//     while(currentNode) {
+//       if(value < currentNode.value) {
+//         parentNode = currentNode;
+//         currentNode = currentNode.left;
+//       } else if(value > currentNode.value) {
+//         parentNode = currentNode;
+//         currentNode = currentNode.right;
+//       } else if(currentNode.value === value) {
 
-          //if parent > current, make right child
-          //of the left the parent
-          if(currentNode.value < parentNode.value) {
-            parentNode.left = currentNode.right;
+//         // 1. No right child
+//         if (currentNode.right === null) {
+//           this.root = currentNode.left;
+//         } else {
+//           // if parent > current value, make current left child
+//           // a child of parent
+//           if(currentNode.value < parentNode.value) {
+//             parentNode.left = currentNode.left;
 
-            //if parent < current, make right child
-            // a right child of the parent
-          } else if(currentNode.value > parentNode.value){ 
-            parentNode.right = currentNode.right;
-          }
-        }
-        // 3. Right child that has a left child
-      } else {
-        //fint the right child's left most child
-        let leftmost = currentNode.right.left;
-        let leftmostParent = currentNode.right;
-        while(leftmostParent.left !== null) {
-          leftmostParent = leftmost;
-          leftmost = leftmost.left;
-        }
+//           //if parent < current value, make left child
+//           // a right child of parent
+//           } else if(currentNode.value > parentNode.value) {
+//             parentNode.right = currentNode.left;
+//           }
+//         }
+//         // 2. Right child which doesn't have a left child
+//       } else if (currentNode.right.left === null) {
+//         if(parentNode === null) {
+//           this.root = currentNode.left;
+//         } else {
+//           currentNode.right.left = currentNode.left;
 
-        // Parent's left subtree is now leftmost's
-        // right subtree
+//           //if parent > current, make right child
+//           //of the left the parent
+//           if(currentNode.value < parentNode.value) {
+//             parentNode.left = currentNode.right;
 
-        leftmostParent.left = leftmost.right;
-        leftmost.left = currentNode.left;
-        leftmost.right = currentNode.right;
+//             //if parent < current, make right child
+//             // a right child of the parent
+//           } else if(currentNode.value > parentNode.value){ 
+//             parentNode.right = currentNode.right;
+//           }
+//         }
+//         // 3. Right child that has a left child
+//       } else {
+//         //fint the right child's left most child
+//         let leftmost = currentNode.right.left;
+//         let leftmostParent = currentNode.right;
+//         while(leftmostParent.left !== null) {
+//           leftmostParent = leftmost;
+//           leftmost = leftmost.left;
+//         }
 
-        if(parentNode === null) {
-          this.root = leftmost;
-        } else {
-          if(currentNode.value < parentNode.value) {
-            parentNode.left = leftmost;
-          } else if(currentNode.value > parentNode.value) {
-            parentNode.right = leftmost;
-          }
-        }
-      }
-      return true;
-    }
-  }
-}
+//         // Parent's left subtree is now leftmost's
+//         // right subtree
 
-const tree = new BinarySearchTree();
-tree.insert(9);
-tree.insert(4);
-tree.insert(6);
-tree.insert(20);
-tree.insert(170);
-tree.insert(15);
-tree.insert(1);
-tree.remove(170);
-JSON.stringify(traverse(tree.root));
-console.log(tree.lookup(20));
+//         leftmostParent.left = leftmost.right;
+//         leftmost.left = currentNode.left;
+//         leftmost.right = currentNode.right;
 
-function traverse(node) {
-  const tree = { value: node.value };
-  tree.left = node.left === null ? null :
-  traverse(node.left);
-  tree.right = node.right === null ? null :
-  traverse(node.right);
-  return tree;
-  // console.log(tree);
-}
+//         if(parentNode === null) {
+//           this.root = leftmost;
+//         } else {
+//           if(currentNode.value < parentNode.value) {
+//             parentNode.left = leftmost;
+//           } else if(currentNode.value > parentNode.value) {
+//             parentNode.right = leftmost;
+//           }
+//         }
+//       }
+//       return true;
+//     }
+//   }
+// }
+
+// const tree = new BinarySearchTree();
+// tree.insert(9);
+// tree.insert(4);
+// tree.insert(6);
+// tree.insert(20);
+// tree.insert(170);
+// tree.insert(15);
+// tree.insert(1);
+// tree.remove(170);
+// JSON.stringify(traverse(tree.root));
+// console.log(tree.lookup(20));
+
+// function traverse(node) {
+//   const tree = { value: node.value };
+//   tree.left = node.left === null ? null :
+//   traverse(node.left);
+//   tree.right = node.right === null ? null :
+//   traverse(node.right);
+//   return tree;
+//   // console.log(tree);
+// }
+
+///  Create Graphs ///
+
+// class Graph {
+//   constructor() {
+//     this.numberOfNodes = 0;
+//     this.adjacentList = {};
+//   }
+//   addVertex(node) {
+//     this.adjacentList[node] = [];
+//     this.numberOfNodes++;
+//   }
+//   addEdge(node1, node2){
+//     //undirected graph
+//     this.adjacentList[node1].push(node2);
+//     this.adjacentList[node2].push(node1);
+//   }
+//   showConnections() {
+//     const allNodes = Object.keys
+//     (this.adjacentList);
+//     for (let node of allNodes) {
+//       let nodeConnections = this.adjacentList[node];
+//       let connections = "";
+//       let vertex;
+//       for (vertex of nodeConnections) {
+//         connections += vertex + " ";
+//       }
+//       console.log(node + "-->" + connections);
+//     }
+//   }
+// }
+
+// const myGraph = new Graph();
+// myGraph.addVertex('0');
+// myGraph.addVertex('1');
+// myGraph.addVertex('2');
+// myGraph.addVertex('3');
+// myGraph.addVertex('4');
+// myGraph.addVertex('5');
+// myGraph.addVertex('6');
+// myGraph.addEdge('3', '1');
+// myGraph.addEdge('3', '4');
+// myGraph.addEdge('4', '2');
+// myGraph.addEdge('4', '5');
+// myGraph.addEdge('1', '2');
+// myGraph.addEdge('1', '0');
+// myGraph.addEdge('0', '2');
+// myGraph.addEdge('6', '5');
+
+// myGraph.showConnections();
+
+/// Recursion ///
+
+// let counter = 0;
+// function inception() {
+//   console.log(counter)
+//   if (counter > 3) {
+//     return 'done';
+//   }
+//   counter ++;
+//   return inception();
+// }
+
+// inception();
+
+/// Write two functions that finds the factorial of any number
+/// one should be recursive, the other should use a for loop.
+
+// function findFactorialRecursive(number) {
+//   if (number === 2) {
+//     return 2;
+//   }
+//   return number * findFactorialRecursive(number - 1);
+// }
+
+// const number = 0;
+// console.log(findFactorialRecursive(number));
+
+// function findFactorialIterative(number) {
+//   let result = 1;
+//   for (let i = 2; i <= number; i++) {
+//     result *= i;
+//   }
+//   return result;
+// }
+// const number = 0;
+// console.log(findFactorialIterative(number));
+
+/// Given a number N return the index value of the Fibonacci
+// sequence, which is that each value is the sum of the 2 previous
+// values.
+
+// function fibonacciIterative(n) {
+//   let arr = [0, 1];
+//   for (let i = 2; i < n +1 ; i++) {
+//     arr.push(arr[i-2] + arr[i-1]);
+//   }
+//   // return arr[n]
+// }
+// const n = 3;
+// fibonacciIterative(n);
+
+// function fibonacciRecursive(n){
+//   if (n < 2) { 
+//     return n;
+//   }
+//   return fibonacciRecursive(n-1) + fibonacciRecursive(n-2);
+// }
+// const n = 3;  
+// fibonacciRecursive(n);
+
+/// Bubble Sort ///
+
+// arr = [3,4,6,1,7,8,9,5]
+
+// function bubbleSort(arr){
+//   const length = arr.length;
+//   for (let i = 0; i < length; i++) {
+//     for (let j = 0; j < length; j++) {
+//       if(arr[j] > arr[j+1]) {
+//         //Swap numbers
+//         let temp = arr[j];
+//         arr[j] = arr[j+1];
+//         arr[j+1] = temp;
+//       }
+//     }
+//   }
+// }
+
+// bubbleSort(arr);
+// console.log(arr);
+
+/// Selection Sort ///
+
+// arr = [3,4,6,1,7,8,9,5];
+
+// function selectionSort(arr) {
+//   const length = arr.length;
+//   for (let i = 0; i < length; i++) {
+//     // set current index as minimum
+//     let min = i;
+//     let temp = arr[i];
+//     for(let j = i+1; j < length; j++){
+//       if (arr[j] < arr[min]) {
+//         //update minimunm if current is
+//         // lower than what we had previously
+//         min = j;
+//       }
+//     }
+//     arr[i] = arr[min];
+//     arr[min] = temp;
+//   }
+//   return array;
+// }
+
+/// Insertion Sort ///
+
+// arr = [3,4,6,1,7,8,9,5];
+
+// function insertionSort(arr) {
+//   const length = arr.length;
+//   for (let i = 0; i < length; i++) {
+//     if (arr[i] < arr[0]) {
+//       //move number to the first position
+//       arr.unshift(arr.splice(i,1)[0]);
+//     } else {
+//       // find where number should go
+//       for (let j = 1; j < i; j++) {
+//         if (arr[i] > arr[j-1] && arr[i] < arr[j]) {
+//           //move number to the right spot
+//           arr.splice(j,0,arr.splice(i,1)[0]);
+//         }
+//       }
+//     }
+//   }
+// }
+// insertionSort(arr);
+// console.log(arr);
+
+/// Merge Sort ///
+
+// const arr = [99, 44, 6, 2, 1, 5, 63, 87, 283, 4, 0];
+
+// function mergeSort(arr) {
+//     if (arr.length === 1) {
+//         return arr;
+//     }
+
+//     // Split Array in into right and left
+//     const length = arr.length;
+//     const middle = Math.floor(length / 2);
+//     const left = arr.slice(0, middle);
+//     const right = arr.slice(middle);
+
+//     return merge(mergeSort(left), mergeSort(right));
+// }
+
+// function merge(left, right) {
+//     const result = [];
+//     let leftIndex = 0;
+//     let rightIndex = 0;
+
+//     while (leftIndex < left.length && rightIndex < right.length) {
+//         if (left[leftIndex] < right[rightIndex]) {
+//             result.push(left[leftIndex]);
+//             leftIndex++;
+//         } else {
+//             result.push(right[rightIndex]);
+//             rightIndex++;
+//         }
+//     }
+
+//     return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+// }
+
+// const answer = mergeSort(arr);
+// console.log(answer);
+
+/// Choose the best sorting algorithm ///
+
+// #1 - Sort 10 schools around your house by distance: insertion sort.
+// #2 - eBay sports listings by the current bid amount: radix or counting sort.
+// #3 - Sport scores on ESPN: quick sort.
+// #4 - Massive database (can't fit all into memory) needs to sort through past year's user data: merge sort.
+// #5 - Almost sorted Udemy review data needs to update and add 2 new reviews: insertion sort.
+// #6 - Temperature Records for the past 50 years in Canada: radix counting sort.
+// #7 - Large user name database needs to be sorted. Data is very random: quick sort.
+// #8 - You want to teach sorting for the first time: bubble sort, selection sort.
