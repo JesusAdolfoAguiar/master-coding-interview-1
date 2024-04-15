@@ -1489,9 +1489,6 @@ function traversePostOrder(node, list) {
   return list;
 }
 
-
-
-
 const tree = new BinarySearchTree();
 tree.insert(9);
 tree.insert(4);
